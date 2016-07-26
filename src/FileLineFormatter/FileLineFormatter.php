@@ -16,28 +16,35 @@ use Behat\Behat\Output\Printer\ConsoleOutputPrinter;
 use Behat\Testwork\EventDispatcher\TestworkEventDispatcher;
 use Behat\Testwork\Output\Formatter;
 use Behat\Testwork\EventDispatcher\Event\Event;
-use Behat\Testwork\Output\Printer\OutputPrinter;
+use Behat\Testwork\Output\Printer\Factory\ConsoleOutputFactory;
+use Behat\Testwork\Output\Printer\StreamOutputPrinter;
 
 final class FileLineFormatter implements Formatter
 {
     const FORMATTER_NAME = 'fileline';
     private $listener;
-    private $subscribedEvents;
+    private static $subscribedEvents;
     private $outputPrinter;
 
     /**
      * FileLineFormatter constructor.
      */
-    public function __construct()
+    public function __construct($name, $basePath)
     {
+        $this->name = $name;
         $this->listener = new ScenarioNodeListener(
             ScenarioTested::AFTER_SETUP,
             ScenarioTested::AFTER,
-            new FileLineScenarioPrinter('/'),
+            new FileLineScenarioPrinter($basePath),
             new FileLineSetupPrinter()
         );
-        $this->subscribedEvents = array(TestworkEventDispatcher::BEFORE_ALL_EVENTS => 'listenEvent');
-        $this->outputPrinter = new ConsoleOutputPrinter();
+        self::$subscribedEvents = array(TestworkEventDispatcher::BEFORE_ALL_EVENTS => 'listenEvent');
+        if (class_exists('Behat\Behat\Output\Printer\ConsoleOutputPrinter')) {
+            $this->outputPrinter = new Behat\Behat\Output\Printer\ConsoleOutputPrinter();
+        } else {
+            $this->outputPrinter = new StreamOutputPrinter(new ConsoleOutputFactory());
+        }
+
     }
 
     /**
@@ -47,7 +54,7 @@ final class FileLineFormatter implements Formatter
      */
     public static function getSubscribedEvents()
     {
-        return self::subscribedEvents;
+        return self::$subscribedEvents;
     }
 
     /**
@@ -67,7 +74,7 @@ final class FileLineFormatter implements Formatter
      */
     public function getName()
     {
-        return self::FORMATTER_NAME;
+        return $this->name;
     }
 
     /**
