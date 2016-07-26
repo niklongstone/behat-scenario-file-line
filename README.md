@@ -5,7 +5,7 @@ i.e.: `feature/feature/MyScenario/login.feature:2`
 
 ### Installation
 #### Require the library via [Composer](https://getcomposer.org/)
-`composer require niklongstone/behat-file-line:dev-master`
+`composer require niklongstone/behat-scenario-file-line:dev-master`
 
 #### Add the formatter to your `behat.yml`:
 ```
