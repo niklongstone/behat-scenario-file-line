@@ -1,0 +1,25 @@
+{
+    "name": "niklongstone/behat-scenario-file-line",
+    "description": "A Behat output formatter which shows a list of scenarios' filename and line",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nicola Pietroluongo",
+            "email": "niklongstone@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpspec/phpspec": "^3.0",
+        "behat/behat": "~3.0.6"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-4": {
+            "FileLineFormatter\\": "src/FileLineFormatter/"
+        }
+    }
+}
