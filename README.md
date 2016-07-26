@@ -8,10 +8,10 @@ i.e.: `feature/feature/MyScenario/login.feature:2`
 `composer require niklongstone/behat-file-line:dev-master`
 
 #### Add the formatter to your `behat.yml`:
-    ```
-    default:
-        formatters:
-            Behat\Behat\Output\Node\Printer\Digest\DigestFormatter:
-    ```
+```
+default:
+    formatters:
+        Behat\Behat\Output\Node\Printer\Digest\DigestFormatter:
+```
 #### From the command line run:  
 `bin/behat --dry-run` to list the scenarios files with lines.
